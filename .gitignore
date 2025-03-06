@@ -8,7 +8,7 @@
 !htdocs/template/css/
 !htdocs/template/js/ 
 !php/
-
+!database/
 # images
 !htdocs/img/vici.si.png
 # css
@@ -29,3 +29,5 @@
 !htdocs/index.php
 # .ini
 !php/php.ini
+# database
+!database/127_0_0_1.sql
