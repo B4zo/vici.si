@@ -1,0 +1,31 @@
+*
+# .gitignore
+!/.gitignore
+# parent directories
+!htdocs/
+!htdocs/img/
+!htdocs/template/
+!htdocs/template/css/
+!htdocs/template/js/ 
+!php/
+
+# images
+!htdocs/img/vici.si.png
+# css
+!htdocs/template/css/bootstrap-datetimepicker.min.css
+!htdocs/template/css/slog.css
+# js
+!htdocs/template/js/bootstrap-datetimepicker.min.js
+!htdocs/template/js/moment.min.js
+# php
+!htdocs/template/baza.html.php
+!htdocs/template/error.html.php
+!htdocs/template/index.html.php
+!htdocs/template/layout.html.php
+!htdocs/template/prijava.html.php
+!htdocs/template/registracija.html.php
+!htdocs/template/sport.html.php
+!htdocs/template/vici.html.php
+!htdocs/index.php
+# .ini
+!php/php.ini
