@@ -12,6 +12,7 @@
     <script type="text/javascript" src="template/js/bootstrap-datetimepicker.min.js"></script>
     <link rel="stylesheet" href="template/css/bootstrap-datetimepicker.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src='https://www.hCaptcha.com/1/api.js' async defer></script>
     <title>Moja spletna stran</title>
   </head>
 <body>

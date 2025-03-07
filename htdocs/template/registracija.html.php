@@ -7,7 +7,25 @@
             $geslo = $_POST['geslo'];
             $pgeslo = $_POST['pgeslo'];
 
-            if (empty($uime) || empty($geslo) || empty($pgeslo)) {
+            $hCaptchaResponse = $_POST['h-captcha-response'];
+            $secretKey = "ES_e8f9644a352a421ab3362a338a7e9e5a";
+            $data = array(
+                'secret' => $secretKey,
+                'response' => $hCaptchaResponse
+            );
+        
+            $verify = curl_init();
+            curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
+            curl_setopt($verify, CURLOPT_POST, true);
+            curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+            
+            $response = curl_exec($verify);
+            $responseData = json_decode($response);
+
+            if (!$responseData->success) {
+                echo "<div class='alert alert-danger' role='alert'>Captcha validacija ni uspela.</div>";
+            } else if (empty($uime) || empty($geslo) || empty($pgeslo)) {
                 echo "<div class='alert alert-danger' role='alert'>Niste izpolnili vseh polj!</div>";
             } elseif (strlen($uime) > 30) {
                 echo "<div class='alert alert-danger' role='alert'>Uporabniško ime je predolgo!</div>";
@@ -63,6 +81,7 @@
                     <label for="exampleInputPassword2">Ponovi geslo</label>
                     <input name="pgeslo" type="password" class="form-control" id="exampleInputPassword2">
                 </div>
+                <div class="h-captcha" data-sitekey="8f0876c4-fa12-4440-8a66-5ab653aa8c32"></div>
                 <input name="signup" type="submit" class="btn btn-primary" value="Sign In"/>
             </form>
         </div>
