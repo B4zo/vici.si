@@ -41,18 +41,16 @@
                     die("Povezava ni uspela: " . $link->connect_error);
                 }
 
-                // Preverjanje, ali uporabniško ime že obstaja
                 $sql = "SELECT username FROM users WHERE username = '$uime'";
                 $result = mysqli_query($link, $sql);
 
                 if (mysqli_num_rows($result) > 0) {
                     echo "<div class='alert alert-danger' role='alert'>Uporabniško ime je že zasedeno!</div>";
                 } else {
-                    // Zakodiramo geslo
+
                     $gkodirano = password_hash($geslo, PASSWORD_DEFAULT);
                     $date = date("Y-m-d");
 
-                    // Vstavljanje novega uporabnika
                     $sql = "INSERT INTO users (username, password, date) VALUES ('$uime', '$gkodirano', '$date')";
 
                     if (mysqli_query($link, $sql)) {
