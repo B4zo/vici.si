@@ -1,8 +1,9 @@
 *
 # .gitignore
 !/.gitignore
-# README
+# essentials
 !/README.md
+!/TODO.md
 # parent directories
 !htdocs/
 !htdocs/img/

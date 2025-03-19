@@ -7,6 +7,7 @@
         if (isset($_POST['login'])) {
             $uime = strip_tags(trim($_POST['uime']));
             $geslo = $_POST['geslo'];
+            $rememberMe = isset($_POST['rememberMe']) ? true : false;
 
             if (empty($uime) || empty($geslo)) {
                 echo "<div class='alert alert-danger' role='alert'>Niste izpolnili vseh polj!</div>";
@@ -22,9 +23,12 @@
                 if (mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
                     $hashed_password = $row['password'];
-                    
                     if (password_verify($geslo, $hashed_password)) {
-                        $_SESSION['username'] = $uime;
+                        if ($rememberMe) {
+                            setcookie('token', bin2hex(random_bytes(32)), time() + (3600 * 24 * 30), "/", "", true, true);
+                        } else {
+                            $_SESSION['username'] = $uime;
+                        }
                         echo "<div class='alert alert-success' role='alert'>Prijava uspešna!</div>";
                     } else {
                         echo "<div class='alert alert-danger' role='alert'>Napačno geslo!</div>";
@@ -48,6 +52,10 @@
                 <div class="form-group">
                     <label for="exampleInputPassword1">Geslo</label>
                     <input name="geslo" type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="rememberMe">
+                    <input type="checkbox" id="rememberMe" name="rememberMe" value="Remember Me">
+                    <label for="rememberMe">Zapomni si me!</label>
                 </div>
                 <input name="login" type="submit" class="btn btn-primary" value="Sign In"/>
             </form>
