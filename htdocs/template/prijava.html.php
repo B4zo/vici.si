@@ -7,6 +7,7 @@
         if (isset($_POST['login'])) {
             $uime = strip_tags(trim($_POST['uime']));
             $geslo = $_POST['geslo'];
+            $rememberMe = isset($_POST['rememberme']) ? true : false;
 
             if (empty($uime) || empty($geslo)) {
                 echo "<div class='alert alert-danger' role='alert'>Niste izpolnili vseh polj!</div>";
@@ -26,6 +27,16 @@
                     if (password_verify($geslo, $hashed_password)) {
                         $_SESSION['username'] = $uime;
                         echo "<div class='alert alert-success' role='alert'>Prijava uspešna!</div>";
+                        if($rememberMe){
+                            $token = bin2hex(random_bytes(32));
+                            $token = $link->real_escape_string($token);
+
+                            $sql1 = "UPDATE users SET cookie = '$token' WHERE username = '$uime'";
+                            mysqli_query($link, $sql1);
+
+                            $expiry = time() + (30 * 24 * 60 * 60);
+                            setcookie("rememberme", $token, $expiry, "/", "", false, true);
+                        }
                     } else {
                         echo "<div class='alert alert-danger' role='alert'>Napačno geslo!</div>";
                     }
@@ -49,7 +60,13 @@
                     <label for="exampleInputPassword1">Geslo</label>
                     <input name="geslo" type="password" class="form-control" id="exampleInputPassword1">
                 </div>
-                <input name="login" type="submit" class="btn btn-primary" value="Sign In"/>
+                <div class="form-group">
+                    <input type="checkbox" aria-label="Remember me!" name="rememberme">
+                    <label for="checkbox">Remember me!</label>
+                </div>
+                <div class="form-group">
+                    <input name="login" type="submit" class="btn btn-primary" value="Sign In"/>
+                </div>
             </form>
         </div>
     </div>
