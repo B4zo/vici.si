@@ -29,6 +29,7 @@
 !htdocs/template/sport.html.php
 !htdocs/template/vici.html.php
 !htdocs/index.php
+!htdocs/template/auth.html.php
 # .ini
 !php/php.ini
 # database

@@ -12,10 +12,8 @@
             if (empty($uime) || empty($geslo)) {
                 echo "<div class='alert alert-danger' role='alert'>Niste izpolnili vseh polj!</div>";
             } else {
-                $link = new mysqli("localhost", "root", "", "users");
-                if ($link->connect_error) {
-                    die("Povezava ni uspela: " . $link->connect_error);
-                }
+                require_once 'baza.html.php';
+                open_database_connection();
 
                 $sql = "SELECT password FROM users WHERE username = '$uime'";
                 $result = mysqli_query($link, $sql);
@@ -31,6 +29,8 @@
                             $token = bin2hex(random_bytes(32));
                             $token = $link->real_escape_string($token);
 
+                            
+
                             $sql1 = "UPDATE users SET cookie = '$token' WHERE username = '$uime'";
                             mysqli_query($link, $sql1);
 
@@ -44,11 +44,10 @@
                     echo "<div class='alert alert-danger' role='alert'>Uporabniško ime ne obstaja!</div>";
                 }
                 
-                mysqli_close($link);
+                close_database_connection($link);
             }
         }
     ?>
-
     <div class="row">
         <div class="col">
             <form method="post">

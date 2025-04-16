@@ -1,8 +1,9 @@
 <?php
 function open_database_connection(){
-	$link=new mysqli("localhost","3r3_2025","3r3_2025","3r3_2025");
-	$link->query("SET NAMES 'utf8'");
-	return $link;
+	$link = new mysqli("localhost", "root", "", "users");
+	if ($link->connect_error) {
+		die("Povezava ni uspela: " . $link->connect_error);
+	}
 }
 
 function close_database_connection($link){
